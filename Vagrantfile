@@ -61,6 +61,14 @@ Vagrant.configure("2") do |config|
               cp ~vagrant/.ssh/auth* ~root/.ssh
 	      yum install -y mdadm smartmontools hdparm gdisk
   	  SHELL
+      box.vm.provision :file, source: './scripts', destination: '/home/vagrant/'
+      box.vm.provision "shell", inline: <<-SHELL
+        chmod u+x ./scripts/create_raid.sh && chmod u+x ./scripts/create_gpt-table.sh
+        sudo bash ./scripts/create_raid.sh
+        sudo bash ./scripts/create_gpt-table.sh
+        df -h
+  	  SHELL
       end
+    config.vm.synced_folder '.', '/vagrant', disabled: true
   end
 end

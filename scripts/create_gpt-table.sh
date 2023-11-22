@@ -1,3 +1,4 @@
+#!/bin/bash
 parted -s /dev/md0 mklabel gpt
 parted /dev/md0 mkpart primary ext4 0% 20%
 parted /dev/md0 mkpart primary ext4 20% 40%
